@@ -34,7 +34,7 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <Button fx:id="unregStudId" mnemonicParsing="false" onAction="#unregStud" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
+                              <Button fx:id="unregStudId" mnemonicParsing="false" onAction="#regStud" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>

@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.sql.*;
 
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,13 +21,22 @@ public class LoginController {
 	private Scene scene;
 	private Stage stage;
 	private Parent root;
+
+	private HostServices hostServices;
+	public HostServices getHostServices() {
+		return hostServices;
+	}
+	public void setHostServices(HostServices hostServices) {
+		this.hostServices = hostServices;
+	}
 	@FXML
 	private Button loginButton;
 	@FXML
 	private TextField usernameField;
 	@FXML
 	private PasswordField passwordField;
-	
+	@FXML
+	private Label labelErr;
 	@FXML
 	private Label usernameErr;
 	@FXML
@@ -57,16 +67,23 @@ public class LoginController {
 		stage.show();
 	}
 	public void switchToStudPanel(ActionEvent e) throws IOException{
-		root  = FXMLLoader.load(getClass().getResource("Registration.fxml"));
-		RegistrationController reg = new RegistrationController();
-		reg.getUser(usernameField.getText());
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("Registration.fxml"));
+		root = (Parent)loader.load();
+		RegistrationController cont = (RegistrationController)loader.getController();
+		cont.getUser(usernameField.getText());
+		cont.studentStatus(usernameField.getText());
 		stage =(Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 	}
 	public void switchToAdminPanel(ActionEvent e) throws IOException{
-		root  = FXMLLoader.load(getClass().getResource("Registration.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminPanel.fxml"));
+		root  = loader.load();
+		AdminController cont = loader.getController();
+		cont.setHostServices(hostServices);
 		stage =(Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -76,24 +93,24 @@ public class LoginController {
 		
 		DatabaseConnection connection = new DatabaseConnection();
 		Connection connect = connection.getConnection();
-		String query = "SELECT * FROM users where username = '"+usernameField.getText()+"' and passwords = '"+passwordField.getText()+"'";
+		String query = "SELECT * FROM user where username = '"+usernameField.getText()+"' and passwords = '"+passwordField.getText()+"'";
 		try {
 		Statement ps = connect.createStatement();
 		ResultSet rs = ps.executeQuery(query);
-		while(rs.next()) {
-		if(rs.getInt(1)==1) {
-			if(rs.getString("Role").contentEquals("Student")) {
+		if(rs.next()) {
+			if(rs.getString("role").contentEquals("Student")) {
 				switchToStudPanel(e);
 			}else {
 				switchToAdminPanel(e);
 			}
 			
 		}else {
-			System.out.println("not success");
+			labelErr.setText("Invalid Login Credentials");
 		}
-		}
+	
 			}catch(Exception err) {
-			err.printStackTrace();
+			    labelErr.setText("Oops something wierd occured try again");
+				err.printStackTrace();
 		}
 	}
 }

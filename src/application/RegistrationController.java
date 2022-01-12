@@ -18,7 +18,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
@@ -45,7 +49,8 @@ public class RegistrationController implements Initializable{
 	private ByteArrayInputStream bais;
 	private String fileName;
 	private Stage stage;
-	
+	private Scene scene;
+	private Parent root;
 	@FXML
 	private Pane slidingPane;
 	@FXML
@@ -121,7 +126,13 @@ public class RegistrationController implements Initializable{
 		});
 		tabPane.getSelectionModel().select(tabRegister);
 	}
-	
+	public void logout(ActionEvent event) throws IOException {
+		root  = FXMLLoader.load(getClass().getResource("Login.fxml"));
+		stage =(Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 	//switch to specifications tab
 	public void switchToSpecification(ActionEvent e) {
 		if(validate()) {
@@ -149,7 +160,7 @@ public class RegistrationController implements Initializable{
 	private byte[] getByteArray( File doc)throws IOException {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final InputStream is = new FileInputStream(doc);
-		final byte[] buffer = new byte[1000];
+		final byte[] buffer = new byte[10000000];
 		int read = -1;
 		while((read = is.read(buffer))>0) {
 			baos.write(buffer, 0, read);
@@ -166,7 +177,7 @@ public class RegistrationController implements Initializable{
 		  String department[] =departmentField.getSelectionModel().getSelectedItem().split(" ");
 		  String departmentId =  department[0].substring(0, 1) + department[1].substring(0, 1);
 		  String classId = cycleId + departmentId;
-		String query = "update student set studName ='"+nameField.getText()+"', studSurname  = '"+surnameField.getText()+"', sex = '"+sexField.getSelectionModel().getSelectedItem()+"', dob = '"+dobFIeld.getValue().toString()+"', nationality = '"+nationalityField.getText()+"', pob = '"+pobFIeld.getText()+"' , parentName = '"+parentnameFIeld.getText()+"' , parentAddress = '"+parentaddressField.getText()+"', division = '"+divisionField.getText()+"', maritalStatus = '"+statusField.getText()+"', cycleId  = '"+cycleId+"' , departmentId = '"+departmentId+"' , classId = '"+classId+"' , qualification = '"+bais+"' where username = '"+username.getText()+"' ";
+		String query = "update student set studName ='"+nameField.getText()+"', studSurname  = '"+surnameField.getText()+"', sex = '"+sexField.getSelectionModel().getSelectedItem()+"', dob = '"+dobFIeld.getValue().toString()+"', nationality = '"+nationalityField.getText()+"', pob = '"+pobFIeld.getText()+"' , parentName = '"+parentnameFIeld.getText()+"' , parentAddress = '"+parentaddressField.getText()+"', division = '"+divisionField.getText()+"', maritalStatus = '"+statusField.getText()+"', cycleId  = '"+cycleId+"' , departmentId = '"+departmentId+"' , classId = '"+classId+"' , qualification = '"+bais+"', fileName ='"+fileName+"' where username = '"+username.getText()+"' ";
 		System.out.println(cycleId);
 		System.out.println(departmentId);
 	    try {
@@ -193,38 +204,43 @@ public class RegistrationController implements Initializable{
 	    }
 		
 	}
-	public void studentStatus() {
-		DatabaseConnection con  = new DatabaseConnection();
-		Connection connect = con.getConnection();
-		String query = "Select * from student where username = '"+username.getText()+"' ";
-		try {
-			Statement ps = connect.createStatement();
-			ResultSet rs = ps.executeQuery(query);
-			while(rs.next()) {
-				if(rs.getString("regStatus").contentEquals("pending"))regStatus.setText("Your Registration is pending");
-				else if(rs.getString("regStatus").contentEquals("registered"))regStatus.setText("You are successfully Registered");
-				else regStatus.setText("You are not yet registered");
-			}
-		}catch(Exception e) {
-			System.out.println(e);
-		}
-		
-	}
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 		ObservableList<String> list = FXCollections.observableArrayList("Male", "Female");
 		sexField.setItems(list);
 		ObservableList<String> cycles = FXCollections.observableArrayList("Basic Technical Cycle", "Ordinary Technical Cycle", "Higher Technical Cycle");
 		cycleField.setItems(cycles);
 		ObservableList<String> departments = FXCollections.observableArrayList("Civil Engineering (CE)", "Rural Engineering (RE)", "Town Planning (TP)", "Land Surveying (LS)");
 		departmentField.setItems(departments);
-		studentStatus();
 		
 	}
 	 
 	public void getUser(String name) {
 		username.setText(name);
 	}
-	
+	public void studentStatus(String name) {
+	try {
+		DatabaseConnection con  = new DatabaseConnection();
+		Connection connect = con.getConnection();
+		String query = "Select * from student where username = '"+name+"' ";
+		Statement ps = connect.createStatement();
+		ResultSet rs = ps.executeQuery(query);
+		while(rs.next()) {
+			System.out.println("hi");
+			if(rs.getString("regStatus") == null) {
+				regStatus.setText("You are not yet registered");
+			}
+			else if(rs.getString("regStatus").contentEquals("registered")) {
+				regStatus.setText("You are successfully Registered");
+			}
+			else {
+				regStatus.setText("Your registration is pending");
+			}
+		}
+	}catch(Exception e) {
+		System.out.println(e);
+	}
+ }
 }

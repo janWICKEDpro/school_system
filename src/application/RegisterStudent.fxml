@@ -23,14 +23,14 @@
       </AnchorPane>
    </right>
    <left>
-      <AnchorPane prefHeight="485.0" prefWidth="553.0" BorderPane.alignment="CENTER">
+      <AnchorPane onMousePressed="#refreshTable" prefHeight="485.0" prefWidth="553.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="317.0" layoutY="435.0" mnemonicParsing="false" style="-fx-background-color: #003638;" text="Register Selected" textFill="#f3f2c9">
+            <Button layoutX="317.0" layoutY="435.0" mnemonicParsing="false" onAction="#registerSelected" style="-fx-background-color: #003638;" text="Register Selected" textFill="#f3f2c9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button layoutX="14.0" layoutY="435.0" mnemonicParsing="false" style="-fx-background-color: #003638;" text="Select all" textFill="#f3f2c9">
+            <Button layoutX="14.0" layoutY="435.0" mnemonicParsing="false" onAction="#selectAll" style="-fx-background-color: #003638;" text="Select all" textFill="#f3f2c9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -38,12 +38,12 @@
                   <Insets />
                </opaqueInsets>
             </Button>
-            <Button layoutX="447.0" layoutY="435.0" mnemonicParsing="false" style="-fx-background-color: red;" text="unregister selected" textFill="#f3f2c9">
+            <Button layoutX="447.0" layoutY="435.0" mnemonicParsing="false" onAction="#unregisterSelected" style="-fx-background-color: red;" text="unregister selected" textFill="#f3f2c9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Label alignment="CENTER" layoutX="148.0" layoutY="24.0" prefHeight="52.0" prefWidth="273.0" text="Register Students" textFill="#003638">
+            <Label alignment="CENTER" layoutX="152.0" prefHeight="52.0" prefWidth="273.0" text="Register Students" textFill="#003638">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -59,7 +59,23 @@
                   <TableColumn fx:id="unregister" prefWidth="75.0" text="Unregister" />
               </columns>
             </TableView>
+            <Label layoutX="18.0" layoutY="77.0" prefHeight="20.0" prefWidth="102.0" text="Refresh table: ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="112.0" layoutY="75.0" mnemonicParsing="false" onAction="#refreshTable" style="-fx-background-color: #003638;" text="refresh" textFill="#f3f2c9">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
       </AnchorPane>
    </left>
 </BorderPane>

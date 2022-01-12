@@ -6,4 +6,6 @@ module School_System {
 	requires javafx.base;
 	
 	opens application to javafx.graphics, javafx.fxml, javafx.base;
+	opens reports to  javafx.graphics, javafx.fxml, javafx.base;
+	exports reports;
 }

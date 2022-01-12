@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -96,12 +97,19 @@ public class SignUpController implements Initializable{
 	public void SignUP(ActionEvent e) {
 		DatabaseConnection database  = new DatabaseConnection();
 		Connection con = database.getConnection();
+		
 		String query = "Insert into user(username, passwords, role) values ('"+usernameField.getText()+"','"+passwordField.getText()+"', '"+roleField.getSelectionModel().getSelectedItem().toString()+"') ";
 		String query_two  = "Insert into student(username) values('"+usernameField.getText()+"' )";
+		String query_three  = "Insert into administrator(Admin_name, signIn_date) values('"+usernameField.getText()+"', '"+LocalDateTime.now()+"')";
 		try {
+			int j;
 			Statement ps = con.createStatement();
 			int i = ps.executeUpdate(query);
-			int j = ps.executeUpdate(query_two);
+			if(roleField.getSelectionModel().getSelectedItem().toString().contentEquals("Student")) {
+			 j = ps.executeUpdate(query_two);
+			}else {
+			j = ps.executeUpdate(query_three);
+			}
 			if(i == 1 && j ==1) {
 				navigate(e);
 			}
@@ -122,6 +130,7 @@ public class SignUpController implements Initializable{
 		root = (Parent)loader.load();
 		RegistrationController cont = (RegistrationController)loader.getController();
 		cont.getUser(usernameField.getText());
+		cont.studentStatus(usernameField.getText());
 		stage =(Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

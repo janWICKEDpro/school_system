@@ -76,7 +76,7 @@
                               <Image url="@undraw_happy_announcement_re_tsm0.png" />
                            </image>
                         </ImageView>
-                        <Button layoutX="626.0" layoutY="476.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #003638;" text="Logout" textFill="#f3f2c9">
+                        <Button layoutX="626.0" layoutY="476.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #003638;" text="Logout" textFill="#f3f2c9">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
