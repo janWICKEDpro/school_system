@@ -63,7 +63,7 @@ public class RegisterStudentController implements Initializable {
 			
 			while(rs.next()) {
 		
-				rows.add(new TableModel(rs.getInt("studId"), rs.getString("studName") + rs.getString("studSurname"), rs.getString("cycleId"), new CheckBox() , new Button("Register"), new Button("Unregister"), null));
+				rows.add(new TableModel(rs.getInt("studId"), rs.getString("studName") + rs.getString("studSurname"), rs.getString("cycleId"), new CheckBox() , new Button("Register"), new Button("Unregister"), new Button("filename")));
 			}
 		} catch (SQLException ev) {
 			// TODO Auto-generated catch block
@@ -98,18 +98,19 @@ public class RegisterStudentController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Button fileBtn = new Button();
+		
 		try {
 			DatabaseConnection con = new DatabaseConnection();
 			Connection connect = con.getConnection();
 			ResultSet rs = connect.createStatement().executeQuery("Select * from student where regStatus = 'pending'");
 			
 			while(rs.next()) {
+				Button fileBtn = new Button();
 				String name = rs.getString("fileName");
 			     pdf  = new File(name);
 			     fileBtn.setText(name);
 				 try(FileOutputStream fos = new FileOutputStream(pdf)){
-					byte[] buffer = new byte[10000000];
+					byte[] buffer = new byte[1024];
 					InputStream is = rs.getBinaryStream("qualification");
 					while(is.read(buffer)>0) {
 						fos.write(buffer);
@@ -117,7 +118,11 @@ public class RegisterStudentController implements Initializable {
 				}catch(IOException e) {
 					System.out.println("huhu");
 				}
-				rows.add(new TableModel(rs.getInt("studId"), rs.getString("studName") + " " + rs.getString("studSurname"), rs.getString("cycleId"), new CheckBox() , new Button("Register"), new Button("Unregister"),new Button(name) ));
+				rows.add(new TableModel(rs.getInt("studId"), rs.getString("studName") + " " + rs.getString("studSurname"), rs.getString("cycleId"), new CheckBox() , new Button("Register"), new Button("Unregister"),fileBtn ));
+				fileBtn.setOnAction(e ->{
+					HostServices host = getHostServices();
+					host.showDocument(pdf.getAbsolutePath());
+				});
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -130,10 +135,7 @@ public class RegisterStudentController implements Initializable {
 		Qualification.setCellValueFactory(new PropertyValueFactory<>("file"));
 		register.setCellValueFactory(new PropertyValueFactory<>("register"));
 		unregister.setCellValueFactory(new PropertyValueFactory<>("unregister"));
-		fileBtn.setOnAction(e ->{
-			HostServices host = getHostServices();
-			host.showDocument(pdf.getAbsolutePath());
-		});
+
 		table.setItems(rows);
 	}
 

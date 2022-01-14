@@ -22,39 +22,26 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER_LEFT" layoutY="101.0" prefHeight="33.0" prefWidth="549.0" style="-fx-background-color: #53b8bb;" />
             <ScrollPane layoutY="134.0" prefHeight="331.0" prefWidth="549.0">
                <content>
                   <VBox prefHeight="293.0" prefWidth="535.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="506.0">
-                           <children>
-                              <Label prefHeight="36.0" prefWidth="283.0" text="Unregistered students">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <Button fx:id="unregStudId" mnemonicParsing="false" onAction="#regStud" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
-                                 <HBox.margin>
-                                    <Insets left="100.0" />
-                                 </HBox.margin>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                           </children>
                            <padding>
                               <Insets left="13.0" />
                            </padding>
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="549.0" style="-fx-background-color: #53b8bb;" />
+                           </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="36.0" prefWidth="506.0">
                            <children>
-                              <Label prefHeight="36.0" prefWidth="283.0" text="Students per class">
+                              <Label prefHeight="36.0" prefWidth="283.0" text="Registered Students">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <Button fx:id="studPerClassId" mnemonicParsing="false" onAction="#studPerClass" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
+                              <Button fx:id="studPerClassId" mnemonicParsing="false" onAction="#regStud" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>
@@ -69,12 +56,12 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="46.0" prefHeight="36.0" prefWidth="506.0">
                            <children>
-                              <Label prefHeight="36.0" prefWidth="283.0" text="Female students per class">
+                              <Label prefHeight="36.0" prefWidth="283.0" text="Class criteria">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <Button fx:id="femaleStudPerClassId" mnemonicParsing="false" onAction="#femaleStudPerClass" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
+                              <Button fx:id="femaleStudPerClassId" mnemonicParsing="false" onAction="#classCriteria" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>
@@ -89,12 +76,12 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="82.0" prefHeight="36.0" prefWidth="506.0">
                            <children>
-                              <Label prefHeight="36.0" prefWidth="283.0" text="Male students per class">
+                              <Label prefHeight="36.0" prefWidth="283.0" text="Department Criteria">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <Button fx:id="maleStud" mnemonicParsing="false" onAction="#maleStudPerClass" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
+                              <Button fx:id="maleStud" mnemonicParsing="false" onAction="#statEnrollByDept" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>
@@ -109,12 +96,12 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="118.0" prefHeight="36.0" prefWidth="506.0">
                            <children>
-                              <Label prefHeight="36.0" prefWidth="283.0" text="Students for a given department">
+                              <Label prefHeight="36.0" prefWidth="283.0" text="Cycle criteria">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#studPerDept" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
+                              <Button mnemonicParsing="false" onAction="#StatEnrolllbyCycle" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #003638;" text="View" textFill="WHITE">
                                  <HBox.margin>
                                     <Insets left="100.0" />
                                  </HBox.margin>

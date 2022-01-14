@@ -6,8 +6,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import org.apache.poi.xssf.model.CommentsTable;
+import org.apache.poi.xssf.usermodel.XSSFComment;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+
 import application.DatabaseConnection;
-import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Cell;
 import javafx.scene.control.TableColumn;
 
 public class RegisteredStudController implements Initializable {
@@ -24,19 +31,23 @@ public class RegisteredStudController implements Initializable {
 	private TableColumn<RegisteredTable, Integer> studId;
 	@FXML
 	private TableColumn<RegisteredTable, String> studName;
-	
-	private HostServices hostServices;
-	public HostServices getHostServices() {
-		return hostServices;
-	}
-	public void setHostServices(HostServices hostServices) {
-		this.hostServices = hostServices;
-	}
-	static ObservableList<RegisteredTable> rows = FXCollections.observableArrayList();
+
+	DatabaseConnection connection = new DatabaseConnection();
+	Connection con = connection.getConnection();
+    ObservableList<RegisteredTable> rows = FXCollections.observableArrayList();
 	
 	
-	public void download(ActionEvent e) {
-		
+	public void download() {
+		try {
+			
+			ResultSet rs = con.createStatement().executeQuery("select * from student where regStatus = 'registered'");
+			XSSFWorkbook wb = new XSSFWorkbook();
+			XSSFSheet sheet = wb.createSheet("Registered Students");
+			XSSFRow header = sheet.createRow(0);
+		//	header.createCell(0).setCellCO
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -45,7 +56,7 @@ public class RegisteredStudController implements Initializable {
 			System.out.println("message");
 			DatabaseConnection connection = new DatabaseConnection();
 			Connection con = connection.getConnection();
-			ResultSet rs = con.createStatement().executeQuery("Select * from student where regStatus = 'pending'");
+			ResultSet rs = con.createStatement().executeQuery("Select * from student where regStatus = 'registered'");
 			while(rs.next()) {
 				
 				rows.add(new RegisteredTable(rs.getInt("studId"), rs.getString("studName") + " " + rs.getString("studSurname")));

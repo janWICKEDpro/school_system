@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="606.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reports.listByClassController">
+   <children>
+      <TableView fx:id="classTable" layoutY="112.0" prefHeight="288.0" prefWidth="433.0">
+        <columns>
+          <TableColumn fx:id="studId" prefWidth="79.0" text="Student ID" />
+          <TableColumn fx:id="studName" minWidth="8.0" prefWidth="200.0" text="Student Name" />
+            <TableColumn fx:id="gender" prefWidth="63.0" text="Gender" />
+            <TableColumn fx:id="classFiled" prefWidth="93.0" text="class" />
+        </columns>
+      </TableView>
+      <ComboBox fx:id="classField" layoutX="450.0" layoutY="112.0" prefWidth="150.0" promptText="select class" />
+      <ComboBox fx:id="genderField" layoutX="450.0" layoutY="161.0" prefWidth="150.0" promptText="select gender" />
+      <Button fx:id="getListBtn" layoutX="479.0" layoutY="232.0" mnemonicParsing="false" onAction="#getList" prefHeight="33.0" prefWidth="70.0" style="-fx-background-color: #003638;" text="Get List" textFill="#f3f2c9" />
+      <Label layoutX="38.0" layoutY="39.0" prefHeight="27.0" prefWidth="265.0" text="Students in a particular class" textFill="#003638">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="downloadListBtn" layoutX="479.0" layoutY="337.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #003638;" text="Download List" textFill="#f3f2c9" />
+   </children>
+</AnchorPane>

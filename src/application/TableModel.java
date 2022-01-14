@@ -3,8 +3,10 @@ package application;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import javafx.application.HostServices;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
@@ -17,7 +19,10 @@ public class TableModel {
 	Button register, unregister;
 	Button file;
 	
-	RegisterStudentController reg = new RegisterStudentController();
+	Alert a = new Alert(AlertType.NONE);
+	 
+    
+	
 	public TableModel(int sn, String name, String cycleId, CheckBox check, Button register, Button unregister,
 			Button file) {
 		super();
@@ -37,11 +42,9 @@ public class TableModel {
     	});
 		register.setOnAction(e ->{
 		register();
-		});
-		
-		
-		
-		
+		 a.setAlertType(AlertType.CONFIRMATION);
+         a.show();
+		});		
 	}
 
 	public void register() {
