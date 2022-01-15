@@ -8,6 +8,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -29,11 +30,21 @@ public class AddCourseController implements Initializable {
 	Connection con = connect.getConnection();
 	ObservableList<String> classes = FXCollections.observableArrayList();
 	ObservableList<String> lecture = FXCollections.observableArrayList();
+	ArrayList<Integer> lectureID = new ArrayList<>();
 	
 	
 	@FXML
 	public void addCourse(ActionEvent event) {
 			
+		try {
+			int i = con.createStatement().executeUpdate("insert into courses(course_id, course_name, course_class,lecId) values('"+courseId.getText()+"', '"+courseName.getText()+"', '"+classField.getSelectionModel().getSelectedItem()+"', '"+lectureID.get(lecturer.getSelectionModel().getSelectedIndex()).intValue()+"') ");
+			if(i == 1) {
+				System.out.println("success");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
@@ -44,6 +55,7 @@ public class AddCourseController implements Initializable {
 			ResultSet qs = con.createStatement().executeQuery("select * from class");
 			while(rs.next()) {
 				lecture.add(rs.getString("lecName"));
+				lectureID.add(rs.getInt("lecId"));
 			}
 			while(qs.next()) {
 				classes.add(qs.getString("classId"));
