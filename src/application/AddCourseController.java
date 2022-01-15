@@ -39,6 +39,7 @@ public class AddCourseController implements Initializable {
 		try {
 			int i = con.createStatement().executeUpdate("insert into courses(course_id, course_name, course_class,lecId) values('"+courseId.getText()+"', '"+courseName.getText()+"', '"+classField.getSelectionModel().getSelectedItem()+"', '"+lectureID.get(lecturer.getSelectionModel().getSelectedIndex()).intValue()+"') ");
 			if(i == 1) {
+				
 				System.out.println("success");
 			}
 		}catch(Exception e) {
