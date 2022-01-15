@@ -1,8 +1,10 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -14,10 +16,15 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 
 public class AddCourseController implements Initializable {
+	private Parent root;
+	private Scene scene;
+	private Stage stage;
 	@FXML
 	private TextField courseId;
 	@FXML
@@ -39,7 +46,12 @@ public class AddCourseController implements Initializable {
 		try {
 			int i = con.createStatement().executeUpdate("insert into courses(course_id, course_name, course_class,lecId) values('"+courseId.getText()+"', '"+courseName.getText()+"', '"+classField.getSelectionModel().getSelectedItem()+"', '"+lectureID.get(lecturer.getSelectionModel().getSelectedIndex()).intValue()+"') ");
 			if(i == 1) {
-				
+				root  = FXMLLoader.load(getClass().getResource("AdminPanel.fxml"));
+				stage =(Stage)((Node)event.getSource()).getScene().getWindow();
+				scene = new Scene(root);
+				stage.setScene(scene);
+				stage.show();
+
 				System.out.println("success");
 			}
 		}catch(Exception e) {
