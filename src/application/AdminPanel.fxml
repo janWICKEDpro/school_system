@@ -27,7 +27,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="reportBtn" layoutX="382.0" layoutY="418.0" mnemonicParsing="false" onAction="#getReportsPage" prefHeight="57.0" prefWidth="146.0" style="-fx-background-color: #003638; -fx-background-radius: 10px;" text="Create Reports" textFill="#f3f2c9">
+      <Button fx:id="reportBtn" layoutX="456.0" layoutY="419.0" mnemonicParsing="false" onAction="#getReportsPage" prefHeight="57.0" prefWidth="146.0" style="-fx-background-color: #003638; -fx-background-radius: 10px;" text="Create Reports" textFill="#f3f2c9">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -39,6 +39,11 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </Button>
+      <Button fx:id="reportBtn1" layoutX="288.0" layoutY="419.0" mnemonicParsing="false" onAction="#getAddCourse" prefHeight="57.0" prefWidth="146.0" style="-fx-background-color: #003638; -fx-background-radius: 10px;" text="Add a course" textFill="#f3f2c9">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
       </Button>
    </children>
 </AnchorPane>

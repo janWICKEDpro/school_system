@@ -55,6 +55,13 @@ public class AdminController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	public void getAddCourse(ActionEvent event) throws IOException {
+		root  = FXMLLoader.load(getClass().getResource("AddCourse.fxml"));
+		stage =(Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 	// Go to reports page
 	@FXML
 	public void getReportsPage(ActionEvent event) throws IOException {	FXMLLoader loader = new FXMLLoader(getClass().getResource("report.fxml"));

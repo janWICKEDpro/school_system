@@ -3,6 +3,8 @@ package application;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -53,9 +55,11 @@ public class SignUpController implements Initializable{
 	@FXML
 	private Label errorMessage;
 	
+	DatabaseConnection database  = new DatabaseConnection();
+	Connection con = database.getConnection();
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ObservableList<String> list = FXCollections.observableArrayList("Admin", "Student");
+		ObservableList<String> list = FXCollections.observableArrayList("Admin", "Student", "Lecturer");
 		roleField.setItems(list);
 	}
 	//validate all the text, password, and combo fields 
@@ -95,20 +99,22 @@ public class SignUpController implements Initializable{
 	}
 	//to add a user into the database
 	public void SignUP(ActionEvent e) {
-		DatabaseConnection database  = new DatabaseConnection();
-		Connection con = database.getConnection();
+	
 		
 		String query = "Insert into user(username, passwords, role) values ('"+usernameField.getText()+"','"+passwordField.getText()+"', '"+roleField.getSelectionModel().getSelectedItem().toString()+"') ";
 		String query_two  = "Insert into student(username) values('"+usernameField.getText()+"' )";
 		String query_three  = "Insert into administrator(Admin_name, signIn_date) values('"+usernameField.getText()+"', '"+LocalDateTime.now()+"')";
+		String query_four  = "Insert into lecturer(lecName) values('"+usernameField.getText()+"')";
 		try {
 			int j;
 			Statement ps = con.createStatement();
 			int i = ps.executeUpdate(query);
 			if(roleField.getSelectionModel().getSelectedItem().toString().contentEquals("Student")) {
 			 j = ps.executeUpdate(query_two);
-			}else {
+			}else if(roleField.getSelectionModel().getSelectedItem().toString().contentEquals("Admin")) {
 			j = ps.executeUpdate(query_three);
+			}else {
+				j= ps.executeUpdate(query_four);
 			}
 			if(i == 1 && j ==1) {
 				navigate(e);
@@ -144,8 +150,22 @@ public class SignUpController implements Initializable{
 		stage.setScene(scene);
 		stage.show();
 	}
+	public void switchToLectPanel(ActionEvent e)throws IOException{
+
+			    FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("LecturerPanel.fxml"));
+				root = (Parent)loader.load();
+				LecturerPanelController cont = (LecturerPanelController)loader.getController();
+				cont.getString(usernameField.getText());
+				stage =(Stage)((Node)e.getSource()).getScene().getWindow();
+				scene = new Scene(root);
+				stage.setScene(scene);
+				stage.show();
+		
+		
+	}
 	//to navigate a users to the appropriate screen after signup
-	public void navigate(ActionEvent e) {
+	public void navigate(ActionEvent e) throws IOException {
 		if(roleField.getSelectionModel().getSelectedItem().contentEquals("Student")) {
 			try {
 				switchToStudPanel(e);
@@ -153,13 +173,17 @@ public class SignUpController implements Initializable{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}else {
+		}else if(roleField.getSelectionModel().getSelectedItem().contentEquals("Student")) {
 			try {
 				switchToAdminPanel(e);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}else {
+			
+				switchToLectPanel(e);
+			
 		}
 	}
 

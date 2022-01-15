@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
-import org.apache.poi.xssf.model.CommentsTable;
-import org.apache.poi.xssf.usermodel.XSSFComment;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.xssf.model.CommentsTable;
+//import org.apache.poi.xssf.usermodel.XSSFComment;
+//import org.apache.poi.xssf.usermodel.XSSFRow;
+//import org.apache.poi.xssf.usermodel.XSSFSheet;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 import application.DatabaseConnection;
@@ -40,10 +40,10 @@ public class RegisteredStudController implements Initializable {
 	public void download() {
 		try {
 			
-			ResultSet rs = con.createStatement().executeQuery("select * from student where regStatus = 'registered'");
-			XSSFWorkbook wb = new XSSFWorkbook();
-			XSSFSheet sheet = wb.createSheet("Registered Students");
-			XSSFRow header = sheet.createRow(0);
+//			ResultSet rs = con.createStatement().executeQuery("select * from student where regStatus = 'registered'");
+//			XSSFWorkbook wb = new XSSFWorkbook();
+//			XSSFSheet sheet = wb.createSheet("Registered Students");
+//			XSSFRow header = sheet.createRow(0);
 		//	header.createCell(0).setCellCO
 		}catch(Exception e) {
 			e.printStackTrace();
